@@ -6,6 +6,9 @@
 <body>
 <basefont face="Arial">
 
+'This script originally designed and built by P. Tong
+'No support or suitability is implied or inferred if you choose to use this script
+'support requests and bug reports are coordinated on github repository
 
 <%
 dim strUTCTime, objcomputer
@@ -35,7 +38,7 @@ NEXT
 
 
 <tr align=center>
-	<td><b><font color=white size=6>Shanghai</td>
+	<td><b><font color=white size=6>SHANGHAI</td>
 	<td><b><font color=white size=6>ZULU</td>
 	<td><b><font color=white size=6>EDT</td>
 </tr>
@@ -44,7 +47,7 @@ NEXT
 <!-----------------END CLOCK TOWER------------------------------->
 
 <table width=100% style='filter:progid:DXImageTransform.Microsoft.Gradient(endColorstr=#ffffff, startColorstr=#000000, gradientType='0');'>
-	<tr><td align=right><font size=5 color=red>SPIN</font><font size=5 color=white> | Shanghai</td></tr>
+	<tr><td align=right><font size=5 color=red>SPIN</font><font size=5 color=white> | POSTNAME</td></tr>
 	<tr><td align=right>State Passive Instrumentation Node</font></td></tr>
 </table>
 
@@ -60,28 +63,36 @@ Dim strSite,arrLatency
 '------------------------------------------
 '------------------------------------------
 '------------Returns Latency as strLatency
-Dim arrSite(5,1) '--------Set the first number to the total number of sites you are pinging below, starting with 0
+Dim arrSite(23,1) '--------Set the first number to the total number of sites you are pinging below, starting with 0
 
 ON ERROR RESUME NEXT
 
-
-arrSite(0,0) = "xxx.xxx.xxx.xxx"
+arrSite(0,0) = "10.253.240.3"
 arrSite(0,1) = "Main State"
 
-arrSite(1,0) = "xxx.xxx.xxx.xxx"
-arrSite(1,1) = "Intranet.State.gov"
+arrSite(1,0) = "10.68.38.11"
+arrSite(1,1) = "Intranet.State.sbu"
 
-arrSite(2,0) = "xxx.xxx.xxx.xxx"
-arrSite(2,1) = "BeijingFP01"
+arrSite(2,0) = "10.0.0.0"
+arrSite(2,1) = "Servername"
 
-arrSite(3,0) = "xxx.xxx.xxx.xxx"
-arrSite(3,1) = "ShanghaiFP01"
+arrSite(3,0) = "10.0.0.0"
+arrSite(3,1) = "Servername"
 
-arrSite(4,0) = "xxx.xxx.xxx.xxx"
-arrSite(4,1) = "ShanghaiFP02"
+arrSite(4,0) = "10.0.0.0"
+arrSite(4,1) = "servername"
 
-arrSite(5,0) = "xxx.xxx.xxx.xxx"
-arrSite(5,1) = "ShanghaiFP03"
+arrSite(5,0) = "10.0.0.0"
+arrSite(5,1) = "servername"
+
+arrSite(6,0) = "10.0.0.0"
+arrSite(6,1) = "Router"
+
+arrSite(7,0) = "10.0.0.0"
+arrSite(7,1) = "Switch"
+
+arrSite(8,0) = "10.0.0.0"
+arrSite(8,1) = "Switch"
 
 
 '------------------------------------------
@@ -95,7 +106,7 @@ arrSite(5,1) = "ShanghaiFP03"
 For x = 0 to Ubound(arrSite,1)
 
 
-	Set objExec = objShell.Exec("ping -n 1 -w 1000 " & arrSite(x,0))
+	Set objExec = objShell.Exec("ping -n 1 -w 4000 " & arrSite(x,0))
 	
 
 
@@ -121,7 +132,9 @@ For x = 0 to Ubound(arrSite,1)
 	End If
 
 	
-	tblLatency = tblLatency & "<tr height='15'><td align=center bgcolor=white style='filter:progid:DXImageTransform.Microsoft.Gradient(endColorstr=#00aaeed, startColorstr=#ffffff, gradientType='2');'><font size=4>" & arrSite(x,1) & "</font></td></tr>" & "<tr><td bgcolor=" & strBGColor & ">" & strLatency & "</td></tr>"
+	tblLatency = tblLatency & "<tr height='15'><td align=center bgcolor=white style='filter:progid:DXImageTransform.Microsoft.Gradient(endColorstr=#00aaeed, startColorstr=#ffffff, gradientType='2');'><font size=4>" & arrSite(x,1) & 
+
+"</font></td></tr>" & "<tr><td bgcolor=" & strBGColor & ">" & strLatency & "</td></tr>"
 
 Next
 
@@ -129,13 +142,13 @@ Next
 '------------------------------------------
 '------------------------------------------
 '------------------------------------------
-strComputer = array("SHANGHAIEX01","SHANGHAIAPX1","SHANGHAIFP01","SHANGHAIMGT01","SHANGHAIISC01","SHANGHAIISC02","SHANGHAIFP02","SHANGHAIMGT02","SHANGHAIFP03","SHANGHAIMGT03")
+strComputer = array("Servername","Servername","Servername","Servername","Servername","Servername","Servername")
 
 
 
 ' REM out the strComputer line above and unrem the below lines and set the server OU path if you want the script to find all your servers for you.
 'dim strComputer()
-'Set objServers = GetObject("LDAP://OU=Servers,OU=shanghai,DC=eap,DC=state,DC=sbu")
+'Set objServers = GetObject("LDAP://OU=Servers,OU=postname,DC=domain,DC=state,DC=sbu")
 'objServers.Filter = Array("Computer")
 'w=0
 'For Each objServer in objServers
@@ -159,18 +172,20 @@ For each objComputer in strComputer
 
 	Set objWMIService = GetObject("winmgmts:\\" & objComputer & "\root\cimv2")
 	Set colItems = objWMIService.ExecQuery("Select * from Win32_LogicalDisk WHERE DriveType=3")
-	txt = "<table ><tr height='15'><td align=center colspan='4'bgcolor=white style='filter:progid:DXImageTransform.Microsoft.Gradient(endColorstr=#00aaeed, startColorstr=#ffffff, gradientType='2');'><font size='4px'>" & objComputer & "</font></td></tr><tr><td width=30px> DL</td><td width=40px> Size</td><td width=50px> Free</td></tr> " 
+	txt = "<table ><tr height='15'><td align=center colspan='4'bgcolor=white style='filter:progid:DXImageTransform.Microsoft.Gradient(endColorstr=#00aaeed, startColorstr=#ffffff, gradientType='2');'><font size='4px'>" & objComputer & 
+
+"</font></td></tr><tr><td width=30px> DL</td><td width=40px> Size</td><td width=50px> Free</td></tr> " 
 
 	For Each objItem in colItems
-	
+
 		DIM pctFreeSpace,strFreeSpace,strusedSpace
 		strBGColor="7dc623"
 		'pctFreeSpace = INT((objItem.FreeSpace / objItem.Size) * 1000)/10
 		strDiskSize = Int(objItem.Size /1073741824)
 		strFreeSpace = Int(objItem.FreeSpace /1073741824) 
-			If strFreeSpace < 5 then
+			If strFreeSpace < 3 then
 				strBGColor = "red" 
-			elseIf strFreeSpace < 10 then
+			elseIf strFreeSpace < 7 then
 				strBGColor = "yellow" 
 			end if
 		txt = txt & "<tr><td> " & objItem.Name & "<td> " & strDiskSize & "<td bgcolor='" & strBGColor & "'>" & strFreeSpace & "<td></tr> "
@@ -180,14 +195,16 @@ For each objComputer in strComputer
 	txt = txt & "</table>"
 
 
-If not Err.Number = 0 Then txt = "<table width='100%'><tr height='15'><td align=center bgcolor=white style='filter:progid:DXImageTransform.Microsoft.Gradient(endColorstr=#00aaeed, startColorstr=#ffffff, gradientType='2');'><font size='4px'>" & objComputer & "</font></td></tr><tr><td bgcolor=red>Error: " & error.number & "</td></tr>"
+If not Err.Number = 0 Then txt = "<table width='100%'><tr height='15'><td align=center bgcolor=white style='filter:progid:DXImageTransform.Microsoft.Gradient(endColorstr=#00aaeed, startColorstr=#ffffff, gradientType='2');'><font 
+
+size='4px'>" & objComputer & "</font></td></tr><tr><td bgcolor=red>Error: " & error.number & "</td></tr>"
 Err.Clear
 z=z+1
-If z=4 then txt=txt & "<td valign=top><table>"
+If z=5 then txt=txt & "<td valign=top><table>"
 
 
 	response.Write(txt)
-if z=4 then z=0
+if z=5 then z=0
 
 Next
 
@@ -201,8 +218,6 @@ Next
 
 
 <%
-
-
 
 'response.Write(tblLatency)
 
@@ -219,7 +234,7 @@ Next
 
 <%
 
-strsqlComputer = array("SHANGHAIAPX1","SHANGHAIWEB01")
+strsqlComputer = array("sqlservername","IISservername")
 
 	
         dim strname, strstate
@@ -229,7 +244,9 @@ For each objComputer in strsqlComputer
 
 	Set objWMIService = GetObject("winmgmts:\\" & objComputer & "\root\cimv2")
 	Set colItems = objWMIService.ExecQuery("Select * from Win32_Service where displayname like 'SQL Server Agent%' or displayname like 'WEBPASS%'  ")
-	txt = "<table ><tr height='15'><td align=center colspan='4'bgcolor=white style='filter:progid:DXImageTransform.Microsoft.Gradient(endColorstr=#00aaeed, startColorstr=#ffffff, gradientType='2');'><font size='4px'>" & objComputer & "</font></td></tr><tr></tr> " 
+	txt = "<table ><tr height='15'><td align=center colspan='4'bgcolor=white style='filter:progid:DXImageTransform.Microsoft.Gradient(endColorstr=#00aaeed, startColorstr=#ffffff, gradientType='2');'><font size='4px'>" & objComputer & 
+
+"</font></td></tr><tr></tr> " 
 
 	For Each objItem in colItems
 	
@@ -249,7 +266,9 @@ For each objComputer in strsqlComputer
 	Next
 	txt = txt & "</table>"
 
-If not Err.Number = 0 Then txt = "<table width='100%'><tr height='15'><td align=center bgcolor=white style='filter:progid:DXImageTransform.Microsoft.Gradient(endColorstr=#00aaeed, startColorstr=#ffffff, gradientType='2');'><font size='4px'>" & objComputer & "</font></td></tr><tr><td bgcolor=red>Error: " & error.number & "</td></tr>"
+If not Err.Number = 0 Then txt = "<table width='100%'><tr height='15'><td align=center bgcolor=white style='filter:progid:DXImageTransform.Microsoft.Gradient(endColorstr=#00aaeed, startColorstr=#ffffff, gradientType='2');'><font 
+
+size='4px'>" & objComputer & "</font></td></tr><tr><td bgcolor=red>Error: " & error.number & "</td></tr>"
 Err.Clear
 z=z+1
 If z=4 then txt=txt & "<td valign=top><table>"
@@ -260,15 +279,15 @@ if z=4 then z=0
 Next
 %>
 
+
 </td></tr></table>
 
 </td><td valign=top>
 <table>
 <%
 
-
-
 response.Write(tblLatency)
+
 
 
 
