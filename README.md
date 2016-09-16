@@ -10,9 +10,11 @@ We are working on getting more documentation, general data, etc. Feel free to co
 _____________________________________________________________________
 For SPIN to work: 
 
-1) Install into your webroot dir on your webserver and create a website for it.
+1) Install into your webroot dir on your webserver and create a website for it. The app pools under IIS7 (including the default app pool) need to use the domain IUSR account.
 
 2) Please use the local GP editor to add the domain\Iuser account to each server's local security policies as follows:
+Local Computer Policy (group policy editor)
+[Console Root\Local COmputer POlicy\Copmuter COnfiguration\Windows Settings\Security Settings\Local Policies\User Rights Assignment]
 
     access this computer from the network
     adjust memory quotas fro a process
@@ -23,4 +25,4 @@ For SPIN to work:
     logon as a service
     replace a process level token
 <br>
-Make certain that your app pools are also using the domain\iusr account, and not the local servers.
+Make certain that your app pools are also using the domain\iusr account, and not the local servers. ** Make certain that the domain IUSR account has permissions to the SPIN directory **
