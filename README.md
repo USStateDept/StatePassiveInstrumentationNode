@@ -14,10 +14,10 @@ For SPIN to work:
 
 2) Please use the local GP editor to add the domain\Iuser account to each server's local security policies as follows:
 Local Computer Policy (group policy editor)
-[Console Root\Local COmputer POlicy\Copmuter COnfiguration\Windows Settings\Security Settings\Local Policies\User Rights Assignment]
+[Console Root\Local Computer Policy\Computer Configuration\Windows Settings\Security Settings\Local Policies\User Rights Assignment]
 
     access this computer from the network
-    adjust memory quotas fro a process
+    adjust memory quotas for a process
     Allow logon on locally
     Generate security audit
     Impersonate a client after authentication
