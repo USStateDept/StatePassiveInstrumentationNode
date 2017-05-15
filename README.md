@@ -15,7 +15,7 @@ Run PingUpdate.ps1 to ping all servers and update the DB--this could be configur
 
 - PingUpdate.ps1 requires Windows 8/Server 2012 or later.
 
-Needs web front end.  You can see the ping updates if you run the following query against the SPIN DB: 
+You can see the ping updates if you run the following query against the SPIN DB: 
 
 ```SQL
 SELECT TOP 1000 [NodeID]
