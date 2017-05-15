@@ -17,7 +17,7 @@ Run PingUpdate.ps1 to ping all servers and update the DB--this could be configur
 
 Needs web front end.  You can see the ping updates if you run the following query against the SPIN DB: 
 
-```
+```SQL
 SELECT TOP 1000 [NodeID]
       ,[Name]
       ,[PingSucceeded]
