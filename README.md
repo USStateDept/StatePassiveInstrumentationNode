@@ -1,6 +1,5 @@
-#SPIN V3
-## StatePassiveInstrumentationNode
-State Passive Instrumentation Node (SPIN) - PowerShell Version
+# SPIN V3
+### State Passive Instrumentation Node (SPIN) - PowerShell and New Desing Version
 
 Rough proof of concept for PowerShell backend.  
 
@@ -18,6 +17,7 @@ Run PingUpdate.ps1 to ping all servers and update the DB--this could be configur
 
 Needs web front end.  You can see the ping updates if you run the following query against the SPIN DB: 
 
+```
 SELECT TOP 1000 [NodeID]
       ,[Name]
       ,[PingSucceeded]
@@ -25,4 +25,5 @@ SELECT TOP 1000 [NodeID]
       ,[HopCount]
       ,[RemoteAddress]
       ,[LastModified]
-  FROM [SPIN].[dbo].[NodePing]
+  FROM [SPIN].[dbo].[NodePing]
+```
